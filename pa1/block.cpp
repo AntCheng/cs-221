@@ -27,8 +27,8 @@ void Block::render(PNG &im, int column, int row) const
     unsigned int maxWidth = ( (unsigned)row+width()>im.width())? im.width() : (row+width()) ;
     unsigned int maxHeight = ( (unsigned)column+height()>im.height())? im.height() : (column+height()) ;
 
-    for(unsigned int x = row; x <= maxHeight; x++){
-        for(unsigned int y = column; y <= maxWidth; y++){
+    for(unsigned int x = row; x < maxHeight; x++){
+        for(unsigned int y = column; y < maxWidth; y++){
             HSLAPixel* pixel = im.getPixel(y,x);
             *pixel = data[x-row][y-column]; //is the two thing the same? (x,y) and [x-row][y-column] <<<<<<<<<<<<<<<- BUGGGGGGGGGGG!!!!!!!!!!!!!!!!!
         }
@@ -54,7 +54,7 @@ void Block::flip()
     vector<vector<HSLAPixel>> copy = data;
     for( int x = 0; x<height(); x++){
         for( int y =0; y<width() ; y++){
-            data[x][y] = copy[height()-x][y];
+            data[x][y] = copy[height()-1-x][y];
         }
     }
 
