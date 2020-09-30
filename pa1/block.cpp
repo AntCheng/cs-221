@@ -20,15 +20,15 @@ int Block::height() const
 void Block::render(PNG &im, int column, int row) const
 {
 /* your code here */
-    if(column <0 || column>im.width() || row<0 || row>im.height()){
+    if(column <0 || (unsigned) column>im.width() || row<0 || (unsigned) row>im.height()){
         return;
     }
 
-    int maxWidth = (row+width()>im.width())? im.width() : (row+width()) ;
-    int maxHeight = (column+height()>im.height())? im.height() : (column+height()) ;
+    unsigned int maxWidth = ( (unsigned)row+width()>im.width())? im.width() : (row+width()) ;
+    unsigned int maxHeight = ( (unsigned)column+height()>im.height())? im.height() : (column+height()) ;
 
-    for(unsigned x = row; x <= maxHeight; x++){
-        for(unsigned y = column; y <= maxWidth; y++){
+    for(unsigned int x = row; x <= maxHeight; x++){
+        for(unsigned int y = column; y <= maxWidth; y++){
             HSLAPixel* pixel = im.getPixel(x,y);
             *pixel = data[x-row][y-column];
         }
@@ -40,9 +40,9 @@ void Block::build(PNG &im, int column, int row, int width, int height)
 /* your code here */
 
     data.resize(im.height());
-    for(unsigned x = row; x<row + height; x++){
+    for(unsigned int x = row; x< (unsigned) row + (unsigned) height; x++){
         data[x-row].resize(im.width());
-        for(unsigned y = column; y < column + width; y++){
+        for(unsigned int y = column; y < (unsigned) column + (unsigned) width; y++){
             HSLAPixel* imPixel = im.getPixel(x,y);
             data[x-row][y-column] = * imPixel;
         }
@@ -53,8 +53,8 @@ void Block::flip()
 {
 /* your code here */
     vector<vector<HSLAPixel>> copy = data;
-    for(unsigned x = 0; x<height(); x++){
-        for(unsigned y =0; y<width() ; y++){
+    for( int x = 0; x<height(); x++){
+        for( int y =0; y<width() ; y++){
             data[x][y] = copy[height()-x][y];
         }
     }
