@@ -161,17 +161,18 @@ void Chain::clear()
 void Chain::copy(Chain const &other)
 {
 /* your code here */
+    
     height_ = other.height_;
     width_ = other.width_;
     length_ = other.length_;
 
     Node* otherHead = other.head_;
-    //Node* head_ = new Node();
-    Node* temp = head_; //if the clear is call, there would be no head_ pointer
+    head_ = new Node();
+    Node* temp = head_; //if the clear is call, there would be head_ pointer, but it point to nowhere
     // if(otherHead->next==otherHead){
     //     return;
     // }
-    
+
     for(int i =0; i < other.length_;i++){
         
         otherHead = otherHead->next;
