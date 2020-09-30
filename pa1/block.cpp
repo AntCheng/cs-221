@@ -29,8 +29,8 @@ void Block::render(PNG &im, int column, int row) const
 
     for(unsigned int x = row; x <= maxHeight; x++){
         for(unsigned int y = column; y <= maxWidth; y++){
-            HSLAPixel* pixel = im.getPixel(x,y);
-            *pixel = data[x-row][y-column];
+            HSLAPixel* pixel = im.getPixel(y,x);
+            *pixel = data[x-row][y-column]; //is the two thing the same? (x,y) and [x-row][y-column] <<<<<<<<<<<<<<<- BUGGGGGGGGGGG!!!!!!!!!!!!!!!!!
         }
     }
 }
@@ -42,7 +42,7 @@ void Block::build(PNG &im, int column, int row, int width, int height)
     for(unsigned int x = row; x< (unsigned) row + (unsigned) height; x++){
         data[x-row].resize(width);
         for(unsigned int y = column; y < (unsigned) column + (unsigned) width; y++){
-            HSLAPixel* imPixel = im.getPixel(x,y);
+            HSLAPixel* imPixel = im.getPixel(y,x);
             data[x-row][y-column] = * imPixel;
         }
     }
