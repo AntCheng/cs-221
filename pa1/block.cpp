@@ -38,10 +38,9 @@ void Block::render(PNG &im, int column, int row) const
 void Block::build(PNG &im, int column, int row, int width, int height)
 {
 /* your code here */
-
-    data.resize(im.height());
+    data.resize(height);
     for(unsigned int x = row; x< (unsigned) row + (unsigned) height; x++){
-        data[x-row].resize(im.width());
+        data[x-row].resize(width);
         for(unsigned int y = column; y < (unsigned) column + (unsigned) width; y++){
             HSLAPixel* imPixel = im.getPixel(x,y);
             data[x-row][y-column] = * imPixel;
