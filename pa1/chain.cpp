@@ -12,7 +12,7 @@
 Chain::~Chain()
 {
 /* your code here */
-delete head_;
+    clear();
 }
 
 /**
@@ -24,6 +24,17 @@ delete head_;
 void Chain::insertBack(const Block &ndata)
 {
 /* your code here */
+    
+    Node* nNode = new Node(ndata);
+    if(head_->next == head_){
+        head_->next = nNode;
+    }else{
+        Node* last = walk(head_,length_);
+        last->next = nNode;
+        nNode->next = NULL;
+    }
+    
+
 }
 
 
@@ -36,6 +47,30 @@ void Chain::insertBack(const Block &ndata)
 void Chain::swap(int i, int j)
 {
 /* your code here */
+if(i==j){
+    return;
+}
+Node* iNode = walk(head_, i);
+Node* iNode_pre = walk(head_,i-1);
+Node* iNode_next = walk(head_, i+1);
+
+Node* jNode = walk(head_,j);
+Node* jNode_pre = walk(head_,j-1);
+Node* jNode_next = walk(head_,j+1);
+
+iNode_pre->next = jNode;
+jNode->next = iNode_next;
+
+jNode_pre ->next = iNode;
+iNode->next = jNode_next;
+
+iNode = NULL;
+iNode_next = NULL;
+iNode_pre = NULL;
+jNode = NULL;
+jNode_next = NULL;
+jNode_pre = NULL;
+//draw a graph to see what happen when i=j-1
 }
 
 /**
@@ -44,6 +79,26 @@ void Chain::swap(int i, int j)
 void Chain::reverse()
 {
 /* your code here */
+if(head_->next == head_){
+    return;
+}
+
+
+if (head_->next!=NULL) {
+    Node* temp = head_;
+    head_= head_->next;
+    reverse();
+    temp->next->next= temp ;
+} // need to put the sentinal to the front
+Node* sNode = walk(head_,length_-2);
+Node* hNode = sNode->next;
+sNode->next = NULL;
+
+hNode->next = head_;
+head_ = hNode;
+
+//still not figure out how to do, PROBLEM: MEMORY leak in the first head_
+
 }
 
 /*
@@ -60,6 +115,21 @@ void Chain::reverse()
 void Chain::rotate(int k)
 {
 /* your code here */
+    if(k==0 || k==1){
+        return;
+    }
+    Node* firstNode = head_->next;
+    Node* firstNode_next = firstNode->next;
+
+    Node* tarNode_pre = walk(head_,k-1);
+    Node* targetNode = walk(head_,k);
+    Node* tarNode_next = walk(head_,k+1); //when walk out of the range, it returns NULL
+    
+
+    head_->next = targetNode;
+    targetNode->next = firstNode_next;
+    tarNode_pre->next = firstNode;
+    firstNode->next = tarNode_next;
 }
 
 /**
@@ -69,6 +139,17 @@ void Chain::rotate(int k)
 void Chain::clear()
 {
 /* your code here */
+    if(head_->next == head_){
+         delete head_;
+         return;
+    }
+    while(head_->next!=NULL){
+        Node* temp = head_;
+        head_= head_->next;
+        delete temp;
+        length_--;
+    }
+    delete head_;
 }
 
 /* makes the current object into a copy of the parameter:
@@ -80,4 +161,15 @@ void Chain::clear()
 void Chain::copy(Chain const &other)
 {
 /* your code here */
+    Node* otherHead = other.head_;
+    Node* temp = head_;
+    for(int i =0; i < other.length_;i++){
+        
+        otherHead = otherHead->next;
+        Block h = otherHead->data;
+        Node* newNode = new Node(h);
+        temp->next = newNode;
+        temp=temp->next;
+
+    }
 }
