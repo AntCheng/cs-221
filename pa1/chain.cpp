@@ -50,6 +50,16 @@ void Chain::swap(int i, int j)
 if(i==j){
     return;
 }
+if(j=i+1){
+    Node* iNode = walk(head_, i);
+    Node* iNode_pre = walk(head_,i-1);
+    Node* jNode = walk(head_,j);
+    Node* jNode_next = walk(head_,j+1);
+
+    iNode_pre->next = jNode;
+    jNode->next=iNode;
+    iNode->next=jNode_next;
+}
 Node* iNode = walk(head_, i);
 Node* iNode_pre = walk(head_,i-1);
 Node* iNode_next = walk(head_, i+1);
@@ -82,22 +92,27 @@ void Chain::reverse()
 if(head_->next == head_){
     return;
 }
+Node* temp = head_;
+int start = 1;
+int end = length_;
+while(end>start){
+    swap(start,end);
+}
 
+// if (head_->next!=NULL) {
+//     Node* temp = head_;
+//     head_= head_->next;
+//     reverse();  //this is not going to work
+//     temp->next->next= temp ;
+// } // need to put the sentinal to the front
+// Node* sNode = walk(head_,length_-2);
+// Node* hNode = sNode->next;
+// sNode->next = NULL;
 
-if (head_->next!=NULL) {
-    Node* temp = head_;
-    head_= head_->next;
-    reverse();
-    temp->next->next= temp ;
-} // need to put the sentinal to the front
-Node* sNode = walk(head_,length_-2);
-Node* hNode = sNode->next;
-sNode->next = NULL;
+// hNode->next = head_;
+// head_ = hNode;
 
-hNode->next = head_;
-head_ = hNode;
-
-//still not figure out how to do, PROBLEM: MEMORY leak in the first head_
+// //still not figure out how to do, PROBLEM: MEMORY leak in the first head_
 
 }
 
