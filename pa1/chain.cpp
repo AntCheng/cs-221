@@ -207,7 +207,7 @@ void Chain::copy(Chain const &other)
     // if(otherHead->next==otherHead){
     //     return;
     // }
-    cout <<"204" <<endl;
+    cout <<head_ <<endl;
     for(int i =0; i < other.length_;i++){
         
         otherHead = otherHead->next;
@@ -219,5 +219,5 @@ void Chain::copy(Chain const &other)
 
     }
     cout <<"214" <<endl;
-    length_ = other.length_;
+    
 }
