@@ -172,17 +172,25 @@ void Chain::rotate(int k)
 void Chain::clear()
 {
 /* your code here */
-    if(head_->next == head_){
+    cout<<"175"<<endl;
+    
+    if(head_->next == head_){ ///don't even have a head_
          delete head_;
+         head_=NULL;
          return;
     }
+    cout << "180"<<endl;
     while(head_->next!=NULL){
         Node* temp = head_;
         head_= head_->next;
+        temp->next = NULL;
         delete temp;
-        length_=0;
+        temp=NULL;
     }
+    cout << "185"<<endl;
     delete head_;
+    head_=NULL;
+    length_=0;
 }
 
 /* makes the current object into a copy of the parameter:
@@ -194,13 +202,15 @@ void Chain::clear()
 void Chain::copy(Chain const &other)
 {
 /* your code here */
-    
+   
     height_ = other.height_;
     width_ = other.width_;
     
-
+    cout << "201"<<endl;
     Node* otherHead = other.head_;
     head_ = new Node();
+    
+    cout << "205"<<endl;
     Node* temp = head_; //if the clear is call, there would be head_ pointer, but it point to nowhere
     // if(otherHead->next==otherHead){
     //     return;

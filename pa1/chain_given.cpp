@@ -80,10 +80,11 @@ PNG Chain::render(int cols, int rows){
    if (cols*rows <= length_){
       retVal.resize(cols*width_,rows*height_);
       Node * curr = head_; curr = curr->next;
+      cout<< "83"<<endl;
       for (int i = 0; i < rows; i++){
          for (int j = 0; j < cols; j++){
             curr->data.render(retVal, j*width_, i*height_);
-
+            cout << "j: " << j << " i: " << i << endl;
             /*cout << "j: " << j << " i: " << i << endl;
             PNG blockpic; blockpic.resize(width_,height_); curr->data.render(blockpic,0,0);
             blockpic.writeToFile("images/bp" + to_string(j) + to_string(i));*/
@@ -91,6 +92,7 @@ PNG Chain::render(int cols, int rows){
             curr = curr->next;
          }
       }
+      cout<<"95"<<endl;
    }
    else {
       cout << "Chain is too short." << endl;
