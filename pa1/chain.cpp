@@ -31,21 +31,13 @@ void Chain::insertBack(const Block &ndata)
 /* your code here */
     
     Node* nNode = new Node(ndata);
-    if(head_->next == head_){
-        head_->next = nNode;
-        length_++;
-        height_=ndata.height();
-        width_=ndata.width();
-    }else{
-        Node* last = walk(head_,length_);
-        last->next = nNode;
-        nNode->next = NULL;
-        length_++;
-        height_=ndata.height();
-        width_=ndata.width();
-    }
+    Node* last = walk(head_,length_);
+    last->next = nNode;
+    nNode->next = NULL;
+    length_++;
+    height_=ndata.height();
+    width_=ndata.width();
     
-
 }
 
 
@@ -208,7 +200,7 @@ void Chain::copy(Chain const &other)
     
     cout << "201"<<endl;
     Node* otherHead = other.head_;
-    head_ = new Node();
+    head_ = new Node(); //memory leak
     
     cout << "205"<<endl;
     Node* temp = head_; //if the clear is call, there would be head_ pointer, but it point to nowhere
@@ -219,10 +211,11 @@ void Chain::copy(Chain const &other)
     for(int i =0; i < other.length_;i++){
         
         otherHead = otherHead->next;
-        Block h = otherHead->data;
-        Node* newNode = new Node(h);
-        temp->next = newNode;
-        temp=temp->next;
+        insertBack(otherHead->data);
+        // Block h = otherHead->data; //BUG
+        // Node* newNode = new Node(h);
+        // temp->next = newNode;
+        // temp=temp->next;
 
     }
     cout <<"214" <<endl;
