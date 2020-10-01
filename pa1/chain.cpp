@@ -2,6 +2,7 @@
 #include "chain_given.cpp"
 #include <cmath>
 #include <iostream>
+using namespace std;
 
 // PA1 functions
 
@@ -13,6 +14,10 @@ Chain::~Chain()
 {
 /* your code here */
     clear();
+    head_=NULL;
+    length_=0;
+    height_=0;
+    width_=0;
 }
 
 /**
@@ -28,10 +33,16 @@ void Chain::insertBack(const Block &ndata)
     Node* nNode = new Node(ndata);
     if(head_->next == head_){
         head_->next = nNode;
+        length_++;
+        height_=ndata.height();
+        width_=ndata.width();
     }else{
         Node* last = walk(head_,length_);
         last->next = nNode;
         nNode->next = NULL;
+        length_++;
+        height_=ndata.height();
+        width_=ndata.width();
     }
     
 
@@ -50,7 +61,7 @@ void Chain::swap(int i, int j)
 if(i==j){
     return;
 }
-if(j=i+1){
+if(j==i+1){
     Node* iNode = walk(head_, i);
     Node* iNode_pre = walk(head_,i-1);
     Node* jNode = walk(head_,j);
@@ -59,6 +70,7 @@ if(j=i+1){
     iNode_pre->next = jNode;
     jNode->next=iNode;
     iNode->next=jNode_next;
+    return;
 }
 Node* iNode = walk(head_, i);
 Node* iNode_pre = walk(head_,i-1);
@@ -80,7 +92,7 @@ iNode_pre = NULL;
 jNode = NULL;
 jNode_next = NULL;
 jNode_pre = NULL;
-//draw a graph to see what happen when i=j-1
+
 }
 
 /**
@@ -92,11 +104,17 @@ void Chain::reverse()
 if(head_->next == head_){
     return;
 }
-Node* temp = head_;
+int i = 0;
 int start = 1;
 int end = length_;
+cout<< start<<endl;
+cout <<end<<endl;
 while(end>start){
+    cout << i << endl;
     swap(start,end);
+    start++;
+    end--;
+    i++;
 }
 
 // if (head_->next!=NULL) {
@@ -162,7 +180,7 @@ void Chain::clear()
         Node* temp = head_;
         head_= head_->next;
         delete temp;
-        length_--;
+        length_=0;
     }
     delete head_;
 }
@@ -179,7 +197,7 @@ void Chain::copy(Chain const &other)
     
     height_ = other.height_;
     width_ = other.width_;
-    length_ = other.length_;
+    
 
     Node* otherHead = other.head_;
     head_ = new Node();
@@ -187,7 +205,7 @@ void Chain::copy(Chain const &other)
     // if(otherHead->next==otherHead){
     //     return;
     // }
-
+    cout <<"204" <<endl;
     for(int i =0; i < other.length_;i++){
         
         otherHead = otherHead->next;
@@ -197,4 +215,6 @@ void Chain::copy(Chain const &other)
         temp=temp->next;
 
     }
+    cout <<"214" <<endl;
+    length_ = other.length_;
 }
