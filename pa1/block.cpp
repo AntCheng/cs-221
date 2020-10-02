@@ -24,8 +24,8 @@ void Block::render(PNG &im, int column, int row) const
         return;
     }
 
-    unsigned int maxWidth = ( (unsigned)row+width()>im.width())? im.width() : (row+width()) ;
-    unsigned int maxHeight = ( (unsigned)column+height()>im.height())? im.height() : (column+height()) ;
+    unsigned int maxWidth = ( (unsigned)column+width()>im.width())? im.width() : (column+width()) ;
+    unsigned int maxHeight = ( (unsigned)row+height()>im.height())? im.height() : (row+height()) ;
 
     for(unsigned int x = row; x < maxHeight; x++){
         for(unsigned int y = column; y < maxWidth; y++){

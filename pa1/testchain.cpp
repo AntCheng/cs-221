@@ -18,15 +18,9 @@ TEST_CASE("chain::basic copy constructor", "[weight=1][part=chain]")
     pngin.readFromFile("images/rbg.png");
 
     Chain c(pngin, 32, 15);
-    cout<<"21"<<endl;
     Chain d(c);
-    cout<<"23"<<endl;
-    cout<<c.size()<<endl;
-    cout<<d.size()<<endl;
     PNG orig = c.render(32,15);
-    cout<<"25"<<endl;
     PNG result = d.render(32,15);
-    cout<<"27"<<endl;
 
     result.writeToFile("images/rbgcopy.png");
     REQUIRE(result == orig);

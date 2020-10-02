@@ -99,10 +99,9 @@ if(head_->next == head_){
 int i = 0;
 int start = 1;
 int end = length_;
-cout<< start<<endl;
-cout <<end<<endl;
+
 while(end>start){
-    cout << i << endl;
+    
     swap(start,end);
     start++;
     end--;
@@ -140,21 +139,73 @@ while(end>start){
 void Chain::rotate(int k)
 {
 /* your code here */
+// do the wrong thing
     if(k==0 || k==1){
         return;
     }
-    Node* firstNode = head_->next;
-    Node* firstNode_next = firstNode->next;
+    int count = 0;
+    int start;
+    int end;
+    Node* sub_start_pre;
+    Node* sub_start;
+    Node* sub_start_next;
 
-    Node* tarNode_pre = walk(head_,k-1);
-    Node* targetNode = walk(head_,k);
-    Node* tarNode_next = walk(head_,k+1); //when walk out of the range, it returns NULL
+    Node* sub_end;
+    Node* sub_end_next;
+    for(int i =1; i<=length_;i++){
+        count++;
+        if(count==1){
+            start=i;
+            sub_start_pre = walk(head_,start-1);
+            sub_start = walk(head_,start);
+            sub_start_next = walk(head_,start+1);
+            cout<<start<<endl;
+        }
+        if(count==k){
+            end=i;
+            //swap(start,end);
+            sub_end = walk(head_,end);
+            sub_end_next = walk(head_,end+1);
+
+            sub_start_pre->next = sub_start_next;
+            sub_end->next= sub_start;
+            sub_start->next = sub_end_next;
+
+            count=0;
+            cout<<end<<endl;
+        }
+    }
+
+    // Node* sub_start_pre;
+    // Node* sub_start;
+    // Node* sub_start_next;
+
+    // Node* sub_end_pre;
+    // Node* sub_end;
+    // Node* sub_end_next;
+    // while(int i =0; i<length_;i++){
+    //     count++;
+    //     if(count==1){
+    //         sub_start_pre = walk(head_,i-1);
+    //         sub_start = walk(head_,i);
+    //         sub_start_next= walk(head_,i);
+    //     }
+    //     if(count==k){
+    //         sub_end_pre = walk(head_,i);
+    //         sub_end = walk(head_,i);
+    //         sub_end_next = walk(head_,i);
+
+    //         count=0;
+
+    //         sub_start_pre->next = sub_end;
+    //         sub_end->next = sub_start_next;
+
+    //         sub_end_pre->next =sub_start;
+    //         sub_start->next = sub_end_next;
+    //     }
+        
+    // }
     
-
-    head_->next = targetNode;
-    targetNode->next = firstNode_next;
-    tarNode_pre->next = firstNode;
-    firstNode->next = tarNode_next;
 }
 
 /**
@@ -164,14 +215,14 @@ void Chain::rotate(int k)
 void Chain::clear()
 {
 /* your code here */
-    cout<<"175"<<endl;
+    
     
     if(head_->next == head_){ ///don't even have a head_
          delete head_;
          head_=NULL;
          return;
     }
-    cout << "180"<<endl;
+    
     while(head_->next!=NULL){
         Node* temp = head_;
         head_= head_->next;
@@ -179,7 +230,7 @@ void Chain::clear()
         delete temp;
         temp=NULL;
     }
-    cout << "185"<<endl;
+   
     delete head_;
     head_=NULL;
     length_=0;
@@ -194,20 +245,18 @@ void Chain::clear()
 void Chain::copy(Chain const &other)
 {
 /* your code here */
-   
+    length_ = 0;
     height_ = other.height_;
     width_ = other.width_;
     
-    cout << "201"<<endl;
     Node* otherHead = other.head_;
     head_ = new Node(); //memory leak
     
-    cout << "205"<<endl;
-    Node* temp = head_; //if the clear is call, there would be head_ pointer, but it point to nowhere
+    //if the clear is call, there would be head_ pointer, but it point to nowhere
     // if(otherHead->next==otherHead){
     //     return;
     // }
-    cout <<head_ <<endl;
+   
     for(int i =0; i < other.length_;i++){
         
         otherHead = otherHead->next;
@@ -218,6 +267,5 @@ void Chain::copy(Chain const &other)
         // temp=temp->next;
 
     }
-    cout <<"214" <<endl;
     
 }
